@@ -30,8 +30,4 @@ jobs:
         env:
           SONAR_TOKEN:  sqp_6d305ee1584616ec1a13f63369d0f5315163a4b4
         run: |
-          D:\a\my-app\my-app\sonar-scanner-4.7.0.2747-windows\bin\sonar-scanner.bat ^
-            -Dsonar.projectKey=sonnerqube-testing ^
-            -Dsonar.sources=. ^
-            -Dsonar.host.url=http://localhost:9000 ^
-            -Dsonar.login=sqp_6d305ee1584616ec1a13f63369d0f5315163a4b4
+          D:\a\my-app\my-app\sonar-scanner-4.7.0.2747-windows\bin\sonar-scanner.bat sonar-scanner.bat -D"sonar.projectKey=sonnerqube-testing" -D"sonar.sources=." -D"sonar.host.url=http://localhost:9000" -D"sonar.token=sqp_6d305ee1584616ec1a13f63369d0f5315163a4b4"
