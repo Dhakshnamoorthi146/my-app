@@ -18,5 +18,5 @@ jobs:
       - name: Run SonarQube analysis
         env:
           SONAR_TOKEN:  sqp_6d305ee1584616ec1a13f63369d0f5315163a4b4
-        run: |
-          C:\sonar-scanner-cli-6.1.0.4477-windows-x64\sonar-scanner-6.1.0.4477-windows-x64\bin\sonar-scanner.bat -D"sonar.projectKey=sonnerqube-testing" -D"sonar.sources=." -D"sonar.host.url=http://localhost:9000" -D"sonar.token=sqp_6d305ee1584616ec1a13f63369d0f5315163a4b4"
+        # run: |
+        #   C:\sonar-scanner-cli-6.1.0.4477-windows-x64\sonar-scanner-6.1.0.4477-windows-x64\bin\sonar-scanner.bat -D"sonar.projectKey=sonnerqube-testing" -D"sonar.sources=." -D"sonar.host.url=http://localhost:9000" -D"sonar.token=sqp_6d305ee1584616ec1a13f63369d0f5315163a4b4"
