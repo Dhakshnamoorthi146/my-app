@@ -1,4 +1,4 @@
-name: SonarQube Analysis
+name: SonarCloud Analysis
 
 on:
   push:
@@ -10,7 +10,7 @@ on:
 
 jobs:
   sonarQube:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -18,13 +18,13 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '21' # Adjust based on your project's requirements
+          node-version: '16' # Adjust based on your project's requirements
 
       - name: Install dependencies
         run: npm install
 
       - name: Run SonarQube analysis
         env:
-          SONAR_TOKEN: sqp_6d305ee1584616ec1a13f63369d0f5315163a4b4
+          SONAR_TOKEN:  sqp_6d305ee1584616ec1a13f63369d0f5315163a4b4
         run: |
           sonar-scanner.bat -D"sonar.projectKey=sonnerqube-testing" -D"sonar.sources=." -D"sonar.host.url=http://localhost:9000" -D"sonar.token=sqp_6d305ee1584616ec1a13f63369d0f5315163a4b4"
