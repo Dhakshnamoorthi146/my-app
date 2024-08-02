@@ -22,4 +22,4 @@ jobs:
         SONAR_TOKEN: sqp_4fac775c877805c367983a9b8826bb67da0fa9a3
       run: |
         # Run the SonarQube Scanner
-        sonar-scanner.bat -D"sonar.projectKey=My-app" -D"sonar.sources=." -D"sonar.host.url=http://localhost:9000" -D"sonar.token=${{ secrets.SONAR_TOKEN }}"
+        C:\sonar-scanner-cli-6.1.0.4477-windows-x64\sonar-scanner-6.1.0.4477-windows-x64\bin\sonar-scanner.bat -D"sonar.projectKey=My-app" -D"sonar.sources=." -D"sonar.host.url=http://localhost:9000" -D"sonar.token=sqp_4fac775c877805c367983a9b8826bb67da0fa9a3"
