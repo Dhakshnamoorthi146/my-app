@@ -1,4 +1,4 @@
-name: SonarCloud Analysis
+name: SonarQube Analysis
 
 on:
   push:
@@ -10,21 +10,28 @@ on:
 
 jobs:
   sonarQube:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - name: Set up Java
+        uses: actions/setup-java@v3
         with:
-          node-version: '21' # Adjust based on your project's requirements
+          java-version: '17'
 
-      - name: Install dependencies
-        run: npm install
+      - name: Download and setup SonarScanner
+        run: |
+          curl -sSLo sonar-scanner-cli.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-windows.zip
+          powershell -Command "Expand-Archive -Path sonar-scanner-cli.zip -DestinationPath ."
+          setx PATH "%PATH%;%CD%\\sonar-scanner-4.7.0.2747-windows\\bin"
 
       - name: Run SonarQube analysis
         env:
           SONAR_TOKEN:  sqp_6d305ee1584616ec1a13f63369d0f5315163a4b4
         run: |
-          sonar-scanner.bat -D"sonar.projectKey=sonnerqube-testing" -D"sonar.sources=." -D"sonar.host.url=http://localhost:9000" -D"sonar.token=sqp_6d305ee1584616ec1a13f63369d0f5315163a4b4"
+          sonar-scanner.bat ^
+            -Dsonar.projectKey=sonnerqube-testing ^
+            -Dsonar.sources=. ^
+            -Dsonar.host.url=http://localhost:9000 ^
+            -Dsonar.login=sqp_6d305ee1584616ec1a13f63369d0f5315163a4b4
