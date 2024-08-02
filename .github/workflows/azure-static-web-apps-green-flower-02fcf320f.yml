@@ -17,8 +17,10 @@ jobs:
 
       - name: Download and setup SonarScanner
         run: |
-          curl -L -o sonar-scanner-cli.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-6.1.0.4477-windows-x64.zip unzip sonar-scanner-cli.zip -d sonar-scanner-cli
-
+          curl -sSLo sonar-scanner-cli.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-windows.zip
+          powershell -Command "Expand-Archive -Path sonar-scanner-cli.zip -DestinationPath ."
+          setx PATH "%PATH%;%CD%\\sonar-scanner-4.7.0.2747-windows\\bin
+      
       # - name: Verify SonarScanner Installation
       #   run: |
       #     dir sonar-scanner-4.7.0.2747-windows\bin
