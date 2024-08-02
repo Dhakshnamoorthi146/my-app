@@ -1,4 +1,4 @@
-name: Build and Analyze
+name: SonarQube Analysis
 
 on:
   push:
@@ -9,49 +9,17 @@ on:
       - main
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '14'
-
-    - name: Install dependencies
-      run: npm install
-
-    - name: Build the project
-      run: npm run build
-
-    - name: Run tests
-      run: npm test
 
   sonarqube:
-    needs: build
-    runs-on: ubuntu-latest
-
+    runs-on: windows-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
+    - uses: actions/checkout@v2
       with:
-        node-version: '14'
+        fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
 
-    - name: Install dependencies
-      run: npm install
-
-    - name: Install SonarScanner
-      run: npm install -g sonarqube-scanner
-
-    - name: Run SonarQube analysis
+    - name: Run SonarQube Scanner
       env:
-        SONAR_HOST_URL: http://localhost:9000  # Replace with your SonarQube server URL
-        SONAR_TOKEN: sqp_4fac775c877805c367983a9b8826bb67da0fa9a3  # Store your SonarQube token in GitHub Secrets
+        SONAR_TOKEN: sqp_4fac775c877805c367983a9b8826bb67da0fa9a3
       run: |
-        sonar-scanner.bat -D"sonar.projectKey=My-app" -D"sonar.sources=." -D"sonar.host.url=http://localhost:9000" -D"sonar.token=sqp_4fac775c877805c367983a9b8826bb67da0fa9a3"
+        # Run the SonarQube Scanner
+        sonar-scanner.bat -D"sonar.projectKey=My-app" -D"sonar.sources=." -D"sonar.host.url=http://localhost:9000" -D"sonar.token=${{ secrets.SONAR_TOKEN }}"
