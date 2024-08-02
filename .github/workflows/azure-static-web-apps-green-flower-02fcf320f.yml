@@ -21,6 +21,11 @@ jobs:
           powershell -Command "Expand-Archive -Path sonar-scanner-cli.zip -DestinationPath ."
           setx PATH "%PATH%;%CD%\\sonar-scanner-4.7.0.2747-windows\\bin"
 
+      - name: Verify SonarScanner Installation
+        run: |
+          dir sonar-scanner-4.7.0.2747-windows\bin
+          echo %PATH%
+
       - name: Run SonarQube analysis
         env:
           SONAR_TOKEN:  sqp_6d305ee1584616ec1a13f63369d0f5315163a4b4
