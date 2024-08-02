@@ -1,32 +1,27 @@
-name: SonarQube Analysis
+name: Build
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
+
 
 jobs:
-
-  sonarqube:
-    runs-on: windows-latest
+  build:
+    name: Build and analyze
+    runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v3
-      with:
-        fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-        
-    - name: Install SonarQube Scanner
-      uses: microsoft/playwright-github-action@v1
-      with:
-        version: 8.0.0
-        download: true
-        setup-only: true
-   
-    - name: Build and analyze
-      env:
-        SONAR_TOKEN: sqp_4fac775c877805c367983a9b8826bb67da0fa9a3
-      shell: cmd
-      run: |
-        # Use the Windows batch file to run the SonarQube scanner
-        "C:\Program Files\SonarQube Scanner\bin\sonar-scanner.bat" -D"sonar.projectKey=My-app" -D"sonar.sources=." -D"sonar.host.url=http://localhost:9000" -D"sonar.token=sqp_4fac775c877805c367983a9b8826bb67da0fa9a3"
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+      # If you wish to fail your job when the Quality Gate is red, uncomment the
+      # following lines. This would typically be used to fail a deployment.
+      # - uses: sonarsource/sonarqube-quality-gate-action@master
+      #   timeout-minutes: 5
+      #   env:
+      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
