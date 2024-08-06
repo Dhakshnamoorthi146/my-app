@@ -18,8 +18,13 @@ jobs:
         with:
           java-version: '17'
 
-      - name: Install SonarScanner
-        run: choco install sonarscanner
+      - name: Download and Install SonarScanner
+        run: |
+          Invoke-WebRequest -Uri "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-windows.zip" -OutFile "sonar-scanner.zip"
+          Expand-Archive sonar-scanner.zip -DestinationPath "C:\sonar-scanner"
+          Set-ItemProperty -Path 'HKCU:\Environment\' -Name 'Path' -Value 'C:\sonar-scanner\sonar-scanner-4.8.0.2856-windows\bin;$Env:Path'
+          $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";C:\sonar-scanner\sonar-scanner-4.8.0.2856-windows\bin"
+        shell: pwsh
 
       - name: Run SonarQube Scan
         run: |
