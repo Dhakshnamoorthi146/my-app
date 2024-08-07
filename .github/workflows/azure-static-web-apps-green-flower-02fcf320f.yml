@@ -19,9 +19,6 @@ jobs:
         distribution: 'adopt'
         java-version: '11'
         
-    - name: Build with Maven
-      working-directory: MyWebApp
-      run: mvn clean install
 
     - name: SonarQube Scan
       uses: sonarsource/sonarqube-scan-action@master
